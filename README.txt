@@ -1,3 +1,13 @@
+At one point or another, the following Toolboxes were required.
+1. Computer Vision Toolbox
+2. GPU Coder
+3. Image Processing Toolbox
+4. Parallel Computing Toolbox
+5. Signal procssing Toolbox
+6. Statistics and Machine Learning Toolbox
+
+
+
 This folder contains some code for executing SPIDER on various datasets.
 
 The basic idea is that there are scripts in each folder (besides SPIDER_functions) called lib_*.m,
