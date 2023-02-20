@@ -43,7 +43,12 @@ function [models, residuals, cs] = combinatoric_search( G, labels, desired_terms
       scales_restricted = scales( combination );
       c_true = c./scales_restricted';
       c_true = c_true/max(abs(c_true)); %normalize by max coefficient
-      model_str =  model_str + c_true(j) + " " + labels( combination(j) ) + "  +  ";
+      model_str =  model_str + c_true(j) + " " + labels( combination(j) );
+      if j < desired_terms
+        model_str = model_str + "  +  ";
+      else
+        model_str = model_str + "  = 0";
+      end
     end
     models{i} = model_str;
   
