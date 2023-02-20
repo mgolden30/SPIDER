@@ -1,9 +1,9 @@
-At one point or another, the following Toolboxes were required.
+At one point or another, the following Toolboxes were required. I would install all to be safe.
 1. Computer Vision Toolbox
 2. GPU Coder
 3. Image Processing Toolbox
 4. Parallel Computing Toolbox
-5. Signal procssing Toolbox
+5. Signal processing Toolbox
 6. Statistics and Machine Learning Toolbox
 
 
