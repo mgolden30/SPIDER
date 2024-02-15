@@ -4,10 +4,10 @@ Make a "publication worthy" optimization curve
 
 clear;
 restoredefaultpath();
+addpath("../SPIDER_functions/")
 
 load("seed_1.mat");
-addpath("../../GISR-main/GISR/");
-[cs, residuals] = greedy_regression_pure_matlab( G );
+[cs, residuals] = greedy_regression_pure_matlab_naive( G );
 
 load("seed_543212345.mat");
 residuals2 = vecnorm( G*cs );
