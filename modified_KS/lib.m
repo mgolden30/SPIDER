@@ -13,7 +13,7 @@ amplitude = 1e-7;
 noise = gaussian_noise( u );
 
 u = u + amplitude*noise;
-return
+
 seeds = [1, 543212345];
 
 for seed = seeds
@@ -73,10 +73,12 @@ for l = 1:nd
   du{l} = real(ifft( (1i * k).^l .* fft(u) ));
 end
 
+%{
 labels{a} =  "dudt";
 G(:,a)    = SPIDER_integrate( u, [2], grid, corners, size_vec, pol0 );
 scales(a) = 1;
 a = a+1;
+%}
 
 addpath("library_generation/");
 %All other library terms are computed with the auto library generation
