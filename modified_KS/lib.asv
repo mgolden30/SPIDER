@@ -8,12 +8,16 @@ addpath("library_generation/");
 load('trajectory.mat');
 
 % Add noise to u
-%%
-amplitude = 1e-7;
+amplitude = 1e-6;
 noise = gaussian_noise( u );
 
+surf(noise);
+return;
+
 u = u + amplitude*noise;
-return
+
+
+
 seeds = [1, 543212345];
 
 for seed = seeds
@@ -119,5 +123,5 @@ function noise = gaussian_noise( u )
   ci = 2*rand( size(u) ) - 1;
   noise = real(ifft2( cr + 1i*ci ));
 
-  noise = noise / max(max(abs(noise)));
+  noise = noise / max(maabs)
 end

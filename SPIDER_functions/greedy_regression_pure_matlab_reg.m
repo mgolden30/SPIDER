@@ -1,4 +1,4 @@
-function [cs, residuals, fbounds] = greedy_regression_pure_matlab( A, eps )
+function [cs, residuals, fs] = greedy_regression_pure_matlab_reg( A, eps )
   %{
   PURPOSE:
   The minimum of L = |A*c| in nested sparse subspaces, such that L
@@ -51,16 +51,12 @@ function [cs, residuals, fbounds] = greedy_regression_pure_matlab( A, eps )
       w = alpha*U'*a;
 
       s = diag(S); %turn singular vectors into array
-      bounds = [s(end), s(end-1)];
       
-      %%{
-      f0  = @(sigma)  1 - 1/alpha^2 * sum( w.^2 ./ ( s.^2 - sigma.^2 - eps^2 ) );
-      reg = @(sigma)  ( s(end)^2 - sigma.^2 - eps^2 ) .* ( s(end-1)^2 - sigma.^2 - eps^2 ) * alpha^2 / (s(end)^2 - s(end-1)^2);
-      f   = @(sigma)  f0(sigma) .* reg(sigma);
-      %%}
-
+      bounds = [1, s(end-1)/s(end)];
+      
+      f = @(sigma)  1 - 1/alpha^2 * sum( w.^2 ./ ( s.^2 - sigma.^2 - eps) );
+      
       maxit = 128;
-      threshold = 1e-130;
       g = 0;
 
       fbounds(i,1) = f(bounds(1));
@@ -68,11 +64,8 @@ function [cs, residuals, fbounds] = greedy_regression_pure_matlab( A, eps )
       for j = 1:maxit
         g  = sum(bounds)/2; %bisection guess
         fg = f(g);
-        if(abs(fg) < threshold)
-          break;
-        end
-
-        if fg > 0
+        
+        if fg < 0
           bounds(1) = g;
         else
           bounds(2) = g;
@@ -82,6 +75,8 @@ function [cs, residuals, fbounds] = greedy_regression_pure_matlab( A, eps )
     end
 
     [~, i_min] = min( candidates );
+
+    fs(n) = f(candidates(i_min));
 
     j = find(I);
     I(j(i_min)) = 0;
