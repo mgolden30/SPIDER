@@ -62,7 +62,6 @@ dxs = [ 1, 1];
 a = 1;
 
 dt = T/(M-1);
-u_t = (circshift(u,-1,2) - u)/dt; %finite difference in time
 
 nd = 10;%num derivs
 du = cell(nd,1);
@@ -74,12 +73,15 @@ for l = 1:nd
   du{l} = real(ifft( (1i * k).^l .* fft(u) ));
 end
 
-%{
-labels{a} =  "dudt";
+u_t = (circshift(u,-1,2) - u)/dt; %finite difference in time
+u_t(:,1) = 0;
+u_t(:,end) = 0;
+time_scale = mean(abs(u),"all") / mean(abs(u_t), "all");
+
+labels{a} =  "\partial_t u";
 G(:,a)    = SPIDER_integrate( u, [2], grid, corners, size_vec, pol0 );
-scales(a) = 1;
+scales(a) = std(u,0,"all")/time_scale;
 a = a+1;
-%}
 
 addpath("library_generation/");
 %All other library terms are computed with the auto library generation
@@ -87,15 +89,9 @@ for i = 1:3^(nd)
   [canonical, derivs, v] = check_library_term(i);
   if(canonical)
     %Add to library
-    [term, str] = generate_library_term(u,du,derivs);
-    %{
-    str
-    v
-    i
-    derivs
-    %}
+    [term, str, scale] = generate_library_term(u,du,derivs);
     G(:,a)    = SPIDER_integrate( term, [], grid, corners, size_vec, pol0 );
-    scales(a) = 1;
+    scales(a) = scale;
     labels{a} = str;
     a = a+1;
   end

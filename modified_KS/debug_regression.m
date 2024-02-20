@@ -8,6 +8,13 @@ restoredefaultpath();
 addpath("../SPIDER_functions/")
 load("seed_1.mat");
 
+%optionally remove the time derivative from the library
+remove_td = true;
+
+if(remove_td)
+  G(:,1) = [];
+end
+
 tic
 [cs,  residuals ] = greedy_regression_pure_matlab_naive( G );
 t2 = toc
@@ -32,7 +39,6 @@ nexttile
 loglog(residuals, 'o');
 nexttile
 loglog(residuals2, 'o');
-return
 
 %% Make a nice figure
 clf;
@@ -48,51 +54,60 @@ scatter( 1:numel(residuals), residuals, ms/3, 's', 'filled', 'markerfacecolor', 
 hold off
 set(gca, "xscale", "log");
 set(gca, "yscale", "log");
-    legend( {'fast', 'slow'}, 'location', 'southwest' );
 
 xlabel("terms in relation $k$", "interpreter", "latex");
 ylabel("residual $r_k$", "interpreter", "latex");
 set(gca, "fontsize", fs );
 set(gcf, "color", "w");
 
-pbaspect([2,1,1]);
+pbaspect([1,1,1]);
 
+
+if(~remove_td)
 %Add annotations
-x = [0.5 0.35];
-y = [0.8 0.44];
-%annotation('textarrow',x,y,'String','$\partial_t u + u \partial_x u + \partial_x^2 u + \partial_x^4u = 0$', ...
-%    'interpreter', 'latex', 'fontsize', fs );
+x = [0.49 0.42];
+y = [0.65 0.48];
+annotation('textarrow',x,y,'String','$\partial_t u + u \partial_x u + \partial_x^2 u + \partial_x^4u$', ...
+    'interpreter', 'latex', 'fontsize', fs );
 
-x = [0.6 0.46];
-y = [0.6 0.24];
-%annotation('textarrow',x,y,'String','$\cdots + c_3 \partial_x u^3 + c_4 \partial_x u^4$', ...
-%    'interpreter', 'latex', 'fontsize', fs );
-
-x = [0.63 0.2];
-y = [0.6 0.4];
+x = [0.595 0.48];
+y = [0.55 0.24];
+annotation('textarrow',x,y,'String','$\cdots + \sum_{k=3}^6 c_k \partial_x u^k$', ...
+    'interpreter', 'latex', 'fontsize', fs );
+%{
+x = [0.63 0.17];
+y = [0.5  0.35];
 dim = [x,y];
-%annotation('textbox',dim,'String','$+c_5 \partial_x u^5 + c_6 \partial_x u^6 = 0$', ...
-%    'interpreter', 'latex', 'fontsize', fs, 'EdgeColor', [1,1,1,0] );
+annotation('textbox',dim,'String','$+c_5 \partial_x u^5 + c_6 \partial_x u^6 = 0$', ...
+    'interpreter', 'latex', 'fontsize', fs, 'EdgeColor', [1,1,1,0] );
+%}
+else
+  x = [0.46 0.46];
+  y = [0.55 0.67];
+  annotation('textarrow',x,y,'String','$C( u ,\partial_x^n u) = 0$', ...
+      'interpreter', 'latex', 'fontsize', fs );
+end
+
+if(remove_td)
+  ks = [13];
+else
+  ks = [4,8];
+end
+
+ylim([1e-6, 1e2]);
+
+hold on
+scatter( ks, residuals(ks), ms, "x", "linewidth", 3, "MarkerEdgeColor", "red" );
+hold off
+
+legend( {'accelerated', 'unaccelerated', ''}, 'location', 'NorthEast' );
+
 
 f = gcf;
 set(gcf, "Position", [91.4000 365.8000 716.8000 442.4000] );
 
-saveas(gcf, "figs/optimiation2.pdf");
-
-
-%% Make a figure showing the alignment of the two algorithms
-nl = size(G,2);
-cos_mat = zeros( [nl,nl] );
-
-for i = 1:nl
-  for j = 1:nl
-    ci = cs(:,i) ~= 0;
-    cj = cs2(:,j) ~= 0;
-    
-    cos_mat(i,j) = dot(ci,cj)/sqrt(sum(ci)*sum(cj));
-  end
+if(remove_td)
+  exportgraphics( gcf, "figs/optimization2.pdf" );
+else
+  exportgraphics( gcf, "figs/optimization.pdf" );
 end
-clf
-imagesc( cos_mat );
-
-loglog( 1:nl, diag(cos_mat) );
