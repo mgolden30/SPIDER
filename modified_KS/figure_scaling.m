@@ -38,9 +38,9 @@ ms = 100;
 clf
 %plot(ns, times_slow, "linewidth", lw, "color", "black");
 %hold on
-plot(ns, (ns/90 ).^4, "linewidth", lw, "color","red", "linestyle", "-");
+plot(ns, (ns/88 ).^4, "linewidth", lw, "color","red", "linestyle", "-");
 hold on
-plot(ns, (ns/160).^3, "linewidth", lw, "color","red", "linestyle", "-");
+plot(ns, (ns/153).^3, "linewidth", lw, "color","red", "linestyle", "-");
 
 scatter( ns, times_slow, ms, 'd', 'filled', 'markerfacecolor', 'black')
 hold on
@@ -49,9 +49,9 @@ scatter( ns, times_fast, ms, 's', 'filled','markerfacecolor', 'black')
 hold off
 set( gca, "xscale", "log" );
 set( gca, "yscale", "log" );
-ylim([1e-2, 1.3e2]);
-xticks([32, 64, 128, 256]);
-xlim([60, 270]);
+ylim([1e-2, 1.3e3]);
+xticks([32, 64, 128, 256, 512]);
+xlim([60, 530]);
 yticks([1e-2, 1e0, 1e2]);
 ylabel("walltime (s)", "interpreter", "latex");
 xlabel("library size $n$", "interpreter", "latex");
@@ -68,3 +68,7 @@ set(gcf, "color", "white");
 annotation('textarrow',[.4,.4],[.7,.6],'String','$n^4$', 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
 annotation('textarrow',[.4,.4],[.25,.35]+0.03,'String','$n^3$', 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
 exportgraphics( gcf, "figs/scaling.pdf" );
+
+
+polyfit( log(ns), log(times_slow), 1 )
+polyfit( log(ns), log(times_fast), 1 )

@@ -8,7 +8,7 @@ addpath("../SPIDER_functions")
 seed = 1;
 rng(seed);
 
-ns = round( 32*1.1.^(0:22) )
+ns = round( 32*1.1.^(0:30) )
 %return
 
 times_slow = [];
@@ -34,35 +34,41 @@ load("times.mat");
 
 fs = 12;
 lw = 2;
-ms = 200;
+ms = 100;
 clf
 %plot(ns, times_slow, "linewidth", lw, "color", "black");
 %hold on
-plot(ns, (ns/90 ).^4, "linewidth", lw, "color","red", "linestyle", "-");
+plot(ns, (ns/88 ).^4, "linewidth", lw, "color","red", "linestyle", "-");
 hold on
-plot(ns, (ns/160).^3, "linewidth", lw, "color","red", "linestyle", "-");
+plot(ns, (ns/153).^3, "linewidth", lw, "color","red", "linestyle", "-");
 
 scatter( ns, times_slow, ms, 'd', 'filled', 'markerfacecolor', 'black')
 hold on
 %plot(ns, times_fast,  "linewidth", lw, "color", "black");
-scatter( ns, times_fast, ms, 's', 'filled', 'markerfacecolor', 'black')
+scatter( ns, times_fast, ms, 's', 'filled','markerfacecolor', 'black')
 hold off
 set( gca, "xscale", "log" );
 set( gca, "yscale", "log" );
-ylim([1e-2, 1.3e2]);
-xticks([32, 64, 128, 256]);
-xlim([60, 270]);
+ylim([1e-2, 1.3e3]);
+xticks([32, 64, 128, 256, 512]);
+xlim([60, 530]);
 yticks([1e-2, 1e0, 1e2]);
 ylabel("walltime (s)", "interpreter", "latex");
-xlabel("$n$", "interpreter", "latex");
+xlabel("library size $n$", "interpreter", "latex");
 legend({ '','','naive', 'accelerated'}, "location", "SouthEast", "interpreter", "latex");
 set(gca,"fontsize", fs);
 
 %Now decide how big I want this figure in inches
 figure = gcf;
-figure.Position = [400,400,500,300];
+im_size = round([500,300]*1);
+figure.Position = [400,400,im_size];
 set(gcf, "color", "white");
 
 %Add annotations for the power law scaling
-annotation('textarrow',[.3,.3],[.7,.6],'String','$n^4$', 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
-annotation('textarrow',[0.4,.4],[.3,.4],'String','$n^4$', 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
+annotation('textarrow',[.4,.4],[.7,.6],'String','$n^4$', 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
+annotation('textarrow',[.4,.4],[.25,.35]+0.03,'String','$n^3$', 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
+exportgraphics( gcf, "figs/scaling.pdf" );
+
+
+polyfit( log(ns), log(times_slow), 1 )
+polyfit( log(ns), log(times_fast), 1 )
