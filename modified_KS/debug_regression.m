@@ -9,7 +9,7 @@ addpath("../SPIDER_functions/")
 load("seed_1.mat");
 
 %optionally remove the time derivative from the library
-remove_td = true;
+remove_td = false;
 
 if(remove_td)
   G(:,1) = [];
@@ -20,14 +20,22 @@ tic
 t2 = toc
 
 %%
-eps = 0e-7;
+%tic
+%[cs2, residuals2, fs] = greedy_regression_pure_matlab( G );
+%t3 = toc
+
 tic
-[cs2, residuals2, fs] = greedy_regression_pure_matlab( G, eps );
-t3 = toc
+
+c0 = zeros( size(G,2),1 );
+c0([1,6,7,19]) = 1;
+n_max = 20;
+[cs2, residuals2] = greedy_regression_pure_matlab_add( G, c0, n_max );
+toc
 
 [t2, t3, t2/t3]
 
 figure(1);
+clf
 tiledlayout(2,2);
 nexttile
 imagesc(cs ~= 0);
@@ -36,7 +44,7 @@ nexttile
 imagesc(cs2~= 0);
 title("fast");
 nexttile
-loglog(residuals, 'o');
+    loglog(residuals, 'o');
 nexttile
 loglog(residuals2, 'o');
 
@@ -94,7 +102,7 @@ else
   ks = [4,8];
 end
 
-ylim([1e-6, 1e2]);
+%ylim([1e-6, 1e2]);
 
 hold on
 scatter( ks, residuals(ks), ms, "x", "linewidth", 3, "MarkerEdgeColor", "red" );

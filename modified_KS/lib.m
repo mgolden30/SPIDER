@@ -9,7 +9,7 @@ load('trajectory.mat');
 
 % Add noise to u
 %%
-amplitude = 1e-7;
+amplitude = 0*1e-7;
 noise = gaussian_noise( u );
 
 u = u + amplitude*noise;
