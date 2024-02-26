@@ -3,6 +3,8 @@
 
 clear;
 
+addpath("library_generation");
+
 num_fields = 8; %\vec{u}, \vec{B}, rho, P
 dim = 4; %(t,x,y,z)
 
@@ -20,6 +22,7 @@ fs = 16;
 scatter( ws, ns, ms, 's', 'filled', "markerfacecolor", "black" );
 hold on
   plot( ws, ns, "linewidth", 2, "color", "black" );
+  plot( ws, 12.^ws, "linewidth", 2, "color", "red" );
 hold off
 
 set(gca, "yscale", "log");
@@ -32,6 +35,14 @@ ylim([3, 3e4]);
 yticks();
 set(gcf, "color", "w");
 set(gca, "fontsize", fs);
+
+x = [0.45 0.45];
+y = [0.7 0.6];
+annotation('textarrow',x,y,'String','$12\,{}^n$', ...
+      'interpreter', 'latex', 'fontsize', fs, "color", "red" );
+
+drawnow;
+exportgraphics(gcf, "../modified_KS/figs/library_scaling.pdf");
 
 function [nl] = compute_library_size( word_limit, num_fields, dim )
   base = num_fields+dim+1;
