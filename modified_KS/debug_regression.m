@@ -32,7 +32,7 @@ n_max = 20;
 [cs2, residuals2] = greedy_regression_pure_matlab_add( G, c0, n_max );
 toc
 
-[t2, t3, t2/t3]
+%[t2, t3, t2/t3]
 
 figure(1);
 clf
