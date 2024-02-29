@@ -80,4 +80,7 @@ function [cs, residuals] = greedy_regression_pure_matlab_naive( A )
     size(A)
     n = n-1;
   end
+
+  %rescale the residual
+  residuals = residuals / sqrt(m);
 end

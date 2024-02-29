@@ -3,11 +3,12 @@ Scaling figures
 %}
 
 clear;
-restoredefaultpath();
-
 addpath("../SPIDER_functions")
-addpath("D:/GISR-main/GISR/SINDy/SINDy-PI-master/Comparison/PDE_Comparison/Implicit_SINDy/Functions/");
-%addpath("SINDy/SINDy-PI-master/Comparison/PDE_Comparison/Implicit_SINDy/TempFunctions/");
+addpath("D:/GISR-main" + ...
+   SINDy/SINDy-PI-master/Comparison/PDE_Comparison/Implicit_SINDy/Functions/");
+addpath("SINDy/SINDy-PI-master/Comparison/PDE_Comparison/Implicit_SINDy/TempFunctions/");
+
+
 
 seed = 1;
 rng(seed);
@@ -18,7 +19,6 @@ ns = round( 32*1.1.^(0:30) )
 num_trials = 8;
 
 times_add = zeros( numel(ns), num_trials );
-times_pi  = zeros( numel(ns), num_trials );
 
 times_slow = [];
 times_fast = [];
@@ -26,7 +26,6 @@ times_fast = [];
 i = 1;
 for n = ns
   n
-
   for trial = 1:num_trials
     A = 2*rand(n,n) - 1;
   %{
@@ -40,29 +39,24 @@ for n = ns
   times_fast = [times_fast, toc];
   %}
 
-   %{
     c0 = zeros(n,1);
     c0([1,3]) = 1;
     max_n = min( [64, n] );
     tic
     [cs, residuals] = greedy_regression_pure_matlab_add( A, c0, max_n );
     times_add(i, trial) =  toc;
-  %}
 
-    tic
-    Theta = A;
-    tol = 1e-3;
-    pflag = 0; %no plotting
-    [Xi, indTheta, lambdavec, numterms, errorv] = ADMpareto( Theta, tol, pflag );
-    times_pi(i, trial) = toc;
+
+
+
+
   end
   i = i + 1;  
 end
 
-save("times3");
+save("times2");
 
 %%
-load("times3.mat");
 load("times2.mat");
 load("times.mat");
 

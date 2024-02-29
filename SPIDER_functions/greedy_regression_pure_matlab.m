@@ -113,4 +113,7 @@ function [cs, residuals, fbounds] = greedy_regression_pure_matlab( G )
     size(G)
     n = n-1;
   end
+
+  %rescale the residual
+  residuals = residuals / sqrt(m);
 end

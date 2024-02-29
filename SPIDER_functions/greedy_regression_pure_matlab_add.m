@@ -84,4 +84,7 @@ function [cs, residuals] = greedy_regression_pure_matlab_add( G, c0, n_max )
     [~, i_min] = min( candidates );
     I(i_min) = 1; %include this term
   end
+
+  %rescale the residual
+  residuals = residuals / sqrt(m);
 end
