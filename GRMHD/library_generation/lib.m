@@ -7,11 +7,17 @@ num_fields = 8; %\vec{u}, \vec{B}, rho, P
 dim = 4; %(t,x,y,z)
 
 ns = [];
-ws = 1:5;
+ws = 1:10;
 for w = ws
+  tic
   [nl] = compute_library_size( w, num_fields, dim );
+  fprintf("walltime %e\n", toc);
+
   ns = [ns, nl];
 end
+save("lib_size.mat");
+
+
 
 %%
 clf;

@@ -75,6 +75,7 @@ clf
 
 %average over trials
 times_add = mean(times_add, 2);
+times_pi  = mean(times_pi,  2);
 
 %restrict data to x-axis we are plotting so the power law fit looks decent
 rel = (ns<520) & (ns>120);
@@ -82,22 +83,26 @@ ns         = ns(rel);
 times_slow = times_slow(rel);
 times_add  = times_add(rel);
 times_fast = times_fast(rel);
-
+times_pi   = times_pi(rel);
 
 p1 = polyfit( log(ns), log(times_slow), 1 );
 p2 = polyfit( log(ns), log(times_fast), 1 );
 p3 = polyfit( log(ns), log(times_add),  1 );
+p4 = polyfit( log(ns), log(times_pi),  1 );
+
 
 plot( ns, exp( p1(1)*log(ns) + p1(2) ), "linewidth", lw, "color","red", "linestyle", "-");
 hold on
 plot( ns, exp( p2(1)*log(ns) + p2(2) ), "linewidth", lw, "color","red", "linestyle", "-");
 plot( ns, exp( p3(1)*log(ns) + p3(2) ), "linewidth", lw, "color","red", "linestyle", "-");
-
+plot( ns, exp( p4(1)*log(ns) + p4(2) ), "linewidth", lw, "color","red", "linestyle", "-");
 pbaspect([1,2,1]);
 
+scatter( ns, times_pi,   ms, 'o', 'filled', 'markerfacecolor', 'black')
 scatter( ns, times_slow, ms, 'd', 'filled', 'markerfacecolor', 'black')
 scatter( ns, times_fast, ms, 's', 'filled', 'markerfacecolor', 'black')
 scatter( ns, times_add,  ms, '^', 'filled', 'markerfacecolor', 'black')
+
 hold off
 set( gca, "xscale", "log" );
 set( gca, "yscale", "log" );
@@ -110,7 +115,7 @@ yticks([1e-1, 1e1, 1e3]);
 
 ylabel("walltime (s)", "interpreter", "latex");
 xlabel("library size $n$", "interpreter", "latex");
-legend({ '','','','Thorough', 'ANUBIS--','ANUBIS+'}, "location", "SouthEast", "interpreter", "latex");
+legend({ '','','','','SINDy-PI','ExhaustiveSearch', 'ANUBIS--','ANUBIS+'}, "location", "SouthEast", "interpreter", "latex");
 set(gca,"fontsize", fs);
 
 %Now decide how big I want this figure in inches
@@ -120,6 +125,7 @@ figure.Position = [200,200,im_size];
 set(gcf, "color", "white");
 
 %Add annotations for the power law scaling
+annotation('textarrow',[.3,.3],[.73,.69 ],'String', sprintf("$n^{%0.2f}$", p4(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
 annotation('textarrow',[.4,.4],[.64,.6 ],'String', sprintf("$n^{%0.2f}$", p1(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
 annotation('textarrow',[.5,.5],[.48,.44],'String', sprintf("$n^{%0.2f}$", p2(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
 annotation('textarrow',[.6,.6],[.39,.35],'String', sprintf("$n^{%0.2f}$", p3(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color', 'red');
@@ -129,4 +135,46 @@ exportgraphics( gcf, "figs/scaling.pdf" );
 polyfit( log(ns), log(times_slow), 1 )
 polyfit( log(ns), log(times_fast), 1 )
 polyfit( log(ns), log(times_add),  1 )
-polyfit( log(ns(1:end-5)), log(times_add(1:end-5)), 1 )
+polyfit( log(ns), log(times_pi),  1 )
+
+
+%% Estimate time to evaluate a library of size 10,000
+
+ns = 10.^(3:8);
+
+sindypi_time = exp( p4(1)*log(ns) + p4(2) )
+exhaust_time = exp( p1(1)*log(ns) + p1(2) )
+anubisp_time = exp( p2(1)*log(ns) + p2(2) )
+anubism_time = exp( p3(1)*log(ns) + p3(2) )
+
+clf;
+scatter([], []);
+
+
+hold on
+%%{
+plot( ns, exp( p1(1)*log(ns) + p1(2) ), "linewidth", lw, "color","blue", "linestyle", "-");
+plot( ns, exp( p2(1)*log(ns) + p2(2) ), "linewidth", lw, "color","blue", "linestyle", "-");
+plot( ns, exp( p3(1)*log(ns) + p3(2) ), "linewidth", lw, "color","blue", "linestyle", "-");
+plot( ns, exp( p4(1)*log(ns) + p4(2) ), "linewidth", lw, "color","blue", "linestyle", "-");
+%%}
+
+scatter( ns, sindypi_time,  ms, 'o', 'filled', 'markerfacecolor', 'black')
+scatter( ns, exhaust_time,  ms, 'd', 'filled', 'markerfacecolor', 'black')
+scatter( ns, anubisp_time,  ms, 's', 'filled', 'markerfacecolor', 'black')
+scatter( ns, anubism_time,  ms, '^', 'filled', 'markerfacecolor', 'black')
+hold off
+
+day  = 60*60*24;
+year = 60*60*24*365;
+hubble = 14.4 * 1e9 * year;
+
+ylim( [1, hubble*2] )
+
+yline( day,  "linewidth", 2, "color", "black", "alpha", 1 );
+yline( year, "linewidth", 2, "color", "black", "alpha", 1 );
+yline(hubble, "linewidth", 2, "color", "black", "alpha", 1);
+set( gca, "xscale", "log" );
+set( gca, "yscale", "log" );
+
+xlabel("$|\mathcal{L}|$", "interpreter", "latex" );
