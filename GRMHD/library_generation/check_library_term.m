@@ -35,8 +35,8 @@ function [valid, fields, derivs, digits] = check_library_term( i, num_fields, di
   %Now we should check if the term is "valid". Set this to False by default
   valid  = false;
   num_f  = sum(digits <= num_fields) - sum(digits == 0); %count the number of fields IN THIS TERM
-  derivs = zeros(4, num_f);
-  fields = zeros(1, num_f);
+  derivs = zeros( dim, num_f);
+  fields = zeros( 1,   num_f);
 
   %First note that if we do not end with a field, the term is invalid
   if( ~any( digits(end) == 1:num_fields)  )

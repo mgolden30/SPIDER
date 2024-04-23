@@ -1,10 +1,15 @@
 N = 128;
 x = (0:(N-1))/N * 2 * pi;
 
+U0 = @(x) cos(3*x) - 0.5*sin(x);
+
+
+
 u0 = cos(3*x) - 0.5*sin(x);
 L = 22;
 M = 256 * 20;
 T = 10 * 20;
+
 
 maxit = 128;
 threshold = 1e-9; %acceptable error in state-velocity

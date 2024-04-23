@@ -21,6 +21,11 @@ save("lib_size.mat");
 
 %%
 clf;
+
+load("lib_size.mat");
+
+ws = ws(1:numel(ns)); %since I killed this counting early
+
 ms = 100;
 fs = 16;
 scatter( ws, ns, ms, 's', 'filled', "markerfacecolor", "black" );

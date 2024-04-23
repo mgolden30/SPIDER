@@ -1,3 +1,7 @@
+%{
+Generate a library for Kuramoto-Sivashinsky 
+%}
+
 
 %% Load data
 clear;
@@ -5,15 +9,14 @@ restoredefaultpath();
 
 addpath("library_generation/");
 
-load('trajectory.mat');
+load('data/trajectory.mat');
+load('data/derivative_matrix.mat')
 
 % Add noise to u
 %%
-amplitude = 1e-7;
-noise = gaussian_noise( u );
-
-u = u + amplitude*noise;
-
+%amplitude = 1*1e-7;
+%noise = gaussian_noise( u );
+%u = u + amplitude*noise;
 
 seeds = [1, 543212345];
 
@@ -23,11 +26,11 @@ for seed = seeds
 addpath("../SPIDER_functions/");
 
 number_of_library_terms = 3;   %under-estimate this
-number_of_windows       = 1024; %number of domains we integrate over 
+number_of_windows       = 2*1024; %number of domains we integrate over 
 degrees_of_freedom      = 1;   %vectors have one degree of freedom
 dimension               = 2;   %how many dimensions does our data have?
 envelope_power          = 8;   %weight is (1-x^2)^power
-size_vec                = [16, 512]; %how many gridpoints should we use per integration?
+size_vec                = [24, 512]; %how many gridpoints should we use per integration?
 buffer                  = 0; %Don't use points this close to boundary
 
 %define shorthand notation
@@ -62,38 +65,19 @@ dxs = [ 1, 1];
 a = 1;
 
 dt = T/(M-1);
-u_t = (circshift(u,-1,2) - u)/dt; %finite difference in time
 
-nd = 10;%num derivs
-du = cell(nd,1);
-for l = 1:nd
-  k = 0:N-1;
-  k(k>N/2) = k(k>N/2) - N;
-  k = k';
-  k = 2*pi/L*k;
-  du{l} = real(ifft( (1i * k).^l .* fft(u) ));
-end
-
-
-labels{a} =  "dudt";
-G(:,a)    = SPIDER_integrate( u, [2], grid, corners, size_vec, pol0 );
-scales(a) = 1;
-a = a+1;
-%}
+nd = 6;%num derivs
 
 addpath("library_generation/");
 %All other library terms are computed with the auto library generation
-for i = 1:3^(nd)
-  [canonical, derivs, v] = check_library_term(i);
-  if(canonical)
+num_fields = 1;
+dim = 2;
+for i = 1:4^(nd)
+  max_symbol_length = nd;
+  [valid, fields, derivs, digits] = check_library_term( i, num_fields, dim, max_symbol_length );
+  if( valid )
     %Add to library
-    [term, str, scale] = generate_library_term(u,du,derivs);
-    %{
-    str
-    v
-    i
-    derivs
-    %}
+    [term, str, scale] = generate_library_term( u, deriv_matrix, derivs);
     G(:,a)    = SPIDER_integrate( term, [], grid, corners, size_vec, pol0 );
     scales(a) = scale;
     labels{a} = str;

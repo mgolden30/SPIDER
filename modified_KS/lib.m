@@ -1,3 +1,10 @@
+%{
+PURPOSE:
+This script will generate a feature matrix G from a 6th order numerical
+solution of moidified KS dynamics.
+%}
+
+
 
 %% Load data
 clear;
@@ -5,14 +12,11 @@ restoredefaultpath();
 
 addpath("library_generation/");
 
-load('trajectory.mat');
+load('data/trajectory.mat');
 
-% Add noise to u
-%%
-amplitude = 1*1e-7;
-noise = gaussian_noise( u );
-
-u = u + amplitude*noise;
+%Add noise to u
+u = add_noise( u, 1e-7 );
+return
 
 
 seeds = [1, 543212345];
@@ -85,16 +89,20 @@ a = a+1;
 
 addpath("library_generation/");
 %All other library terms are computed with the auto library generation
+num_fields = 1;
+dim = 1;
 for i = 1:3^(nd)
-  [canonical, derivs, v] = check_library_term(i);
-  if(canonical)
+  max_symbol_length = 11;
+  [valid, fields, derivs, digits] = check_library_term( i, num_fields, dim, max_symbol_length );
+  if( valid )
     %Add to library
-    [term, str, scale] = generate_library_term(u,du,derivs);
+    [term, str, scale] = generate_library_term2( u, deriv_matrix, derivs);
     G(:,a)    = SPIDER_integrate( term, [], grid, corners, size_vec, pol0 );
     scales(a) = scale;
     labels{a} = str;
     a = a+1;
   end
+  size(G)
 end
 
 %normalize with non-odd polynomial.
@@ -110,7 +118,9 @@ save("seed_" + seed + ".mat", "G", "labels", "scales");
 end
 
 
-function noise = gaussian_noise( u )
+function u = add_noise( u, amplitude )
+  %Add white Gaussian noise to our numerical solution
+
   seed = 1;
   rng(seed);
 
@@ -118,5 +128,14 @@ function noise = gaussian_noise( u )
   ci = 2*rand( size(u) ) - 1;
   noise = real(ifft2( cr + 1i*ci ));
 
-  noise = noise / max(max(abs(noise)));
+  %rescale to std = 1
+  noise = noise / std(  noise,0,"all");
+
+  %{
+  std(noise, 0,"all")  
+  mean( noise,  "all")
+  histogram( noise, 100 );
+  %}
+
+  u = u + amplitude*noise;
 end

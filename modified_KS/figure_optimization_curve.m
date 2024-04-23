@@ -1,51 +1,27 @@
-%{
-My optimization curves are currently ever so slightly, but importantly
-different. I wnt to check for numerical instability in my bisection method.
-%}
-
 clear;
 restoredefaultpath();
 addpath("../SPIDER_functions/")
-load("seed_1.mat");
 
-%optionally remove the time derivative from the library
+%remove time derivative from library?
 remove_td = false;
+seed = 1;
+[r_e, r_p, r_m ] = optimization_curves(seed, remove_td);
 
-if(remove_td)
-  G(:,1) = [];
-end
 
-tic
-[cs,  residuals ] = greedy_regression_pure_matlab_naive( G );
-t2 = toc
 
 %%
-tic
-[cs2, residuals2, fs] = greedy_regression_pure_matlab( G );
-t3 = toc
-
-tic
-%{
-c0 = zeros( size(G,2),1 );
-c0([1,6,7,19]) = 1;
-n_max = 100;
-[cs2, residuals2] = greedy_regression_pure_matlab_add( G, c0, n_max );
-toc
-%}
-
-%[t2, t3, t2/t3]
 
 figure(1);
 clf
 tiledlayout(2,2);
 nexttile
-imagesc(cs ~= 0);
+%imagesc(cs ~= 0);
 title("naive");
 nexttile
 imagesc(cs2~= 0);
 title("fast");
 nexttile
-    loglog(residuals, 'o');
+   % loglog(residuals, 'o');
 nexttile
 loglog(residuals2, 'o');
 
@@ -79,8 +55,8 @@ y = [0.65 0.48];
 annotation('textarrow',x,y,'String','$\partial_t u + u \partial_x u + \partial_x^2 u + \partial_x^4u$', ...
     'interpreter', 'latex', 'fontsize', fs );
 
-x = [0.595 0.48];
-y = [0.55 0.24];
+x = [0.61 0.48];
+y = [0.55 0.21];
 annotation('textarrow',x,y,'String','$\cdots + \sum_{k=3}^6 c_k \partial_x u^k$', ...
     'interpreter', 'latex', 'fontsize', fs );
 %{
@@ -91,7 +67,7 @@ annotation('textbox',dim,'String','$+c_5 \partial_x u^5 + c_6 \partial_x u^6 = 0
     'interpreter', 'latex', 'fontsize', fs, 'EdgeColor', [1,1,1,0] );
 %}
 else
-  x = [0.46 0.46];
+  x = [0.44 0.44];
   y = [0.55 0.67];
   annotation('textarrow',x,y,'String','$C( u ,\partial_x^n u) = 0$', ...
       'interpreter', 'latex', 'fontsize', fs );
@@ -104,14 +80,14 @@ else
 end
 
 ylim([1e-7, 1e0]);
-yticks("")
+yticks([1e-6, 1e-4, 1e-2, 1e0]);
 
 
 hold on
 scatter( ks, residuals(ks), ms, "x", "linewidth", 3, "MarkerEdgeColor", "red" );
 hold off
 
-legend( {'accelerated', 'unaccelerated', ''}, 'location', 'NorthEast' );
+legend( {'ANUBIS-', 'Thorough', ''}, 'location', 'NorthEast' );
 
 
 f = gcf;
@@ -121,4 +97,51 @@ if(remove_td)
   exportgraphics( gcf, "figs/optimization2.pdf" );
 else
   exportgraphics( gcf, "figs/optimization.pdf" );
+end
+
+
+function [r_e, r_p, r_m ] = optimization_curves(seed, remove_td)
+  %{
+  PURPOSE:
+  Do sparse regression three ways and record the resulting curves
+  
+  r_e - exhaustive search
+  r_p/m - ANUBIS+-
+  %}
+  
+  load("seed_"+seed+".mat");
+
+  if(remove_td)
+    G(:,1) = [];
+    labels(1) = [];
+  end
+
+  %Exhaustive
+  tic
+  [cs_e,  r_e ] = exhaustive_search( G );
+  t_e = toc;
+  fprintf("Exhasutive Search: %.2f seconds...\n", t_e);
+
+  %ANUBIS-minus
+  tic
+  [cs_m, r_m] = greedy_regression_pure_matlab( G );
+  t_m = toc
+  fprintf("ANUBIS-: %.2f seconds...\n", t_m);
+
+  %Need an initial guess
+  c0 = zeros( size(G,2),1 ); 
+  desired_terms = {"\partial_t u", "u(dx^1 u)"};%, "(dx^2dt^0 u)", "(dx^4dt^0 u)"};
+  for i = 1:numel(labels)
+    for j = 1:numel(desired_terms)
+      if( labels{i} == desired_terms{j} )
+        c0(i) = 1;
+        i
+      end
+    end
+  end
+  n_max = 50;
+  tic
+  [cs_p, r_p] = greedy_regression_pure_matlab_add( G, c0, n_max );
+  t_p = toc
+  fprintf("ANUBIS+: %.2f seconds...\n", t_p);
 end

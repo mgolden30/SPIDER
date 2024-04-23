@@ -7,7 +7,7 @@ clear;
 restoredefaultpath();
 addpath("../SPIDER_functions/")
 load("seed_1.mat");
-
+return
 %optionally remove the time derivative from the library
 remove_td = false;
 
@@ -27,11 +27,19 @@ tic
 t3 = toc
 %}
 
-tic
 c0 = zeros( size(G,2),1 );
-%c0([1,6,7,19]) = 1;
-c0([3,4]) = 1;
-n_max = 100;
+desired_terms = {"(dx^0dt^1 u)", "u(dx^1dt^0 u)"};%, "(dx^2dt^0 u)", "(dx^4dt^0 u)"};
+for i = 1:numel(labels)
+  for j = 1:numel(desired_terms)
+    if( labels{i} == desired_terms{j} )
+      c0(i) = 1;
+      i
+    end
+  end
+end
+
+n_max = 50;
+tic
 [cs2, residuals2] = greedy_regression_pure_matlab_add( G, c0, n_max );
 toc
 %}
@@ -42,13 +50,13 @@ figure(1);
 clf
 tiledlayout(2,2);
 nexttile
-imagesc(cs ~= 0);
+%imagesc(cs ~= 0);
 title("naive");
 nexttile
 imagesc(cs2~= 0);
 title("fast");
 nexttile
-    loglog(residuals, 'o');
+   % loglog(residuals, 'o');
 nexttile
 loglog(residuals2, 'o');
 

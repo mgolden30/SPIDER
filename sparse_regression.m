@@ -28,6 +28,7 @@ index = 3; %use 1 2 or 3 depending on your residual choice.
 %3: |Gc|/max|G.*c| <- relative residual
 
 clf
+%{
 if exist('cs_ave')
   %You've run greedy regression before
   starting_K = 5;
@@ -37,7 +38,9 @@ else
   starting_model = cs(1,:);
   starting_K = sum( starting_model ~= 0 );
 end
+%}
 
+starting_model = ones( size(G,2),1 );
 number_of_subsamples = 100; %Do parameter estimation 100 times to estimate uncertainty
 fraction_of_windows_in_subsample = 1/2; %use half of windows randomly each time we estimate parameters
 
@@ -68,10 +71,10 @@ xlim( [0.5, size(res_ave,2)+0.5] );
 set(gcf,'color','w');
 pbaspect([2 1 1])
 
-xline( starting_K );
+%xline( starting_K );
 
 %Print some models 
-for interest = 2:6
+for interest = 2:7
   print_model( interest, cs_ave, res_ave, index, labels, scales )
 end
 
