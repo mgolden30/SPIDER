@@ -15,7 +15,7 @@ addpath("library_generation/");
 load('data/trajectory.mat');
 
 %Add noise to u
-u = add_noise( u, 1e-7 );
+u = add_noise( u, 1e-8 );
 
 %Seeds for two different feature matrices
 seeds = [1, 543212345];
