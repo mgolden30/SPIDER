@@ -123,7 +123,7 @@ yticks([1e-1, 1e1, 1e3]);
 
 ylabel("walltime (s)", "interpreter", "latex");
 xlabel("library size $n$", "interpreter", "latex");
-%legend({ '','','','','ExhaustiveSearch', 'ANUBIS--','ANUBIS+','SINDy-PI'}, "location", "SouthEast", "interpreter", "latex");
+%legend({ '','','','','ExhaustiveSearch', 'ANUBIS--','ANUBIS+','SINDy'}, "location", "SouthEast", "interpreter", "latex");
 set(gca,"fontsize", fs);
 
 %Now decide how big I want this figure in inches
@@ -134,7 +134,7 @@ set(gcf, "color", "white");
 
 %Add annotations for the power law scaling
 annot_col = "black";
-annotation('textarrow',[.34,.34],[.78,.7 ],'String', sprintf("Implicit-SINDy ($n^{%0.2f}$)", p4(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color', annot_col);
+annotation('textarrow',[.34,.34],[.78,.7 ],'String', sprintf("implicit-SINDy ($n^{%0.2f}$)", p4(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color', annot_col);
 annotation('textarrow',[.7,.7],[.67,.785 ], 'String', sprintf("exhaustive search ($n^{%0.2f}$)", p1(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color',  annot_col);
 annotation('textarrow',[.5,.5],[.48,.42],  'String', sprintf("ANUBIS-- ($n^{%0.2f}$)", p2(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color',  annot_col);
 annotation('textarrow',[.6,.6],[.28,.34],  'String', sprintf("ANUBIS+ $(n^{%0.2f}$)", p3(1)), 'Interpreter', 'latex', 'fontsize', fs, 'color',  annot_col);
@@ -257,7 +257,7 @@ py = 0.53;
 wx = 0.32 ; %width
 wy = 0.023;
 dims = [px,py,wx,wy];
-annotation('textbox', dims, 'rotation', 55, 'String', 'Implicit-SINDy', 'Interpreter', 'latex', 'fontsize', fs, 'color', 'black', 'edgecolor', 1*[1,1,1] );
+annotation('textbox', dims, 'rotation', 55, 'String', 'implicit-SINDy', 'Interpreter', 'latex', 'fontsize', fs, 'color', 'black', 'edgecolor', 1*[1,1,1] );
 
 %exhaustive search
 px = 0.6; %position
