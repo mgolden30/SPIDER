@@ -22,7 +22,8 @@ function [rho, v, B, P, t, x1, x2, x3] = load_MHD_data_stitch( )
   
   gs = h5readatt( filename, '/', 'RootGridSize' ); %true grid size
 
-  timesteps = 600; %number of timesteps I want to read
+
+  timesteps = 300; %number of timesteps I want to read
 
   B    = zeros(timesteps, gs(1), gs(2), gs(3), 3);
   prim = zeros(timesteps, gs(2), gs(2), gs(3), 5); %4 or 5 depending on if pressure is needed

@@ -50,7 +50,7 @@ function [cs, residuals, fbounds] = greedy_regression_pure_matlab( G )
       alpha = 1/norm(a);
       w = alpha*U'*a;
 
-      ws = [w(end-1), w(end)]
+      ws = [w(end-1), w(end)];
 
       s = diag(S); %turn singular vectors into array
       bounds = [s(end), s(end-1)];

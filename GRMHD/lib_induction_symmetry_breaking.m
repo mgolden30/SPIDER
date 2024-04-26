@@ -53,6 +53,7 @@ grid = {t,x1,x2,x3};
 %%%%%%%%%%%%%%%%%%%%%%
 a = 1;
 
+%Specify the component you want
 labels{a} = "\partial_t B_3";
 G(:,a)    =  SPIDER_integrate( B(:,:,:,:,3), [1], grid, corners, size_vec, pol );  
 scales(a) = 1;

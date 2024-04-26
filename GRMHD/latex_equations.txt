@@ -1,0 +1,288 @@
+\partial_0 B_1
+\partial_1 B_1
+\partial_2 B_1
+\partial_3 B_1
+\partial_0 B_2
+\partial_1 B_2
+\partial_2 B_2
+\partial_3 B_2
+\partial_0 B_3
+\partial_1 B_3
+\partial_2 B_3
+\partial_3 B_3
+\partial_0\rho
+\partial_1\rho
+\partial_2\rho
+\partial_3\rho
+\partial_0\partial_0\rho
+\partial_0\partial_1\rho
+\partial_0\partial_2\rho
+\partial_0\partial_3\rho
+\partial_1\partial_1\rho
+\partial_1\partial_2\rho
+\partial_1\partial_3\rho
+\partial_2\partial_2\rho
+\partial_2\partial_3\rho
+\partial_3\partial_3\rho
+\partial_0\partial_0\partial_0\rho
+\partial_0\partial_0\partial_1\rho
+\partial_0\partial_0\partial_2\rho
+\partial_0\partial_0\partial_3\rho
+\partial_0\partial_1\partial_1\rho
+\partial_0\partial_1\partial_2\rho
+\partial_0\partial_1\partial_3\rho
+\partial_0\partial_2\partial_2\rho
+\partial_0\partial_2\partial_3\rho
+\partial_0\partial_3\partial_3\rho
+\partial_1\partial_1\partial_1\rho
+\partial_1\partial_1\partial_2\rho
+\partial_1\partial_1\partial_3\rho
+\partial_1\partial_2\partial_2\rho
+\partial_1\partial_2\partial_3\rho
+\partial_1\partial_3\partial_3\rho
+\partial_2\partial_2\partial_2\rho
+\partial_2\partial_2\partial_3\rho
+\partial_2\partial_3\partial_3\rho
+\partial_3\partial_3\partial_3\rho
+\partial_0\partial_0\partial_0\partial_0\rho
+\partial_0\partial_0\partial_0\partial_1\rho
+\partial_0\partial_0\partial_0\partial_2\rho
+\partial_0\partial_0\partial_0\partial_3\rho
+\partial_0\partial_0\partial_1\partial_1\rho
+\partial_0\partial_0\partial_1\partial_2\rho
+\partial_0\partial_0\partial_1\partial_3\rho
+\partial_0\partial_0\partial_2\partial_2\rho
+\partial_0\partial_0\partial_2\partial_3\rho
+\partial_0\partial_0\partial_3\partial_3\rho
+\partial_0\partial_1\partial_1\partial_1\rho
+\partial_0\partial_1\partial_1\partial_2\rho
+\partial_0\partial_1\partial_1\partial_3\rho
+\partial_0\partial_1\partial_2\partial_2\rho
+\partial_0\partial_1\partial_2\partial_3\rho
+\partial_0\partial_1\partial_3\partial_3\rho
+\partial_0\partial_2\partial_2\partial_2\rho
+\partial_0\partial_2\partial_2\partial_3\rho
+\partial_0\partial_2\partial_3\partial_3\rho
+\partial_0\partial_3\partial_3\partial_3\rho
+\partial_1\partial_1\partial_1\partial_1\rho
+\partial_1\partial_1\partial_1\partial_2\rho
+\partial_1\partial_1\partial_1\partial_3\rho
+\partial_1\partial_1\partial_2\partial_2\rho
+\partial_1\partial_1\partial_2\partial_3\rho
+\partial_1\partial_1\partial_3\partial_3\rho
+\partial_1\partial_2\partial_2\partial_2\rho
+\partial_1\partial_2\partial_2\partial_3\rho
+\partial_1\partial_2\partial_3\partial_3\rho
+\partial_1\partial_3\partial_3\partial_3\rho
+\partial_2\partial_2\partial_2\partial_2\rho
+\partial_2\partial_2\partial_2\partial_3\rho
+\partial_2\partial_2\partial_3\partial_3\rho
+\partial_2\partial_3\partial_3\partial_3\rho
+\partial_3\partial_3\partial_3\partial_3\rho
+\partial_0(\rho u_1)
+\partial_1(\rho u_1)
+\partial_2(\rho u_1)
+\partial_3(\rho u_1)
+\partial_0\partial_0(\rho u_1)
+\partial_0\partial_1(\rho u_1)
+\partial_0\partial_2(\rho u_1)
+\partial_0\partial_3(\rho u_1)
+\partial_1\partial_1(\rho u_1)
+\partial_1\partial_2(\rho u_1)
+\partial_1\partial_3(\rho u_1)
+\partial_2\partial_2(\rho u_1)
+\partial_2\partial_3(\rho u_1)
+\partial_3\partial_3(\rho u_1)
+\partial_0\partial_0\partial_0(\rho u_1)
+\partial_0\partial_0\partial_1(\rho u_1)
+\partial_0\partial_0\partial_2(\rho u_1)
+\partial_0\partial_0\partial_3(\rho u_1)
+\partial_0\partial_1\partial_1(\rho u_1)
+\partial_0\partial_1\partial_2(\rho u_1)
+\partial_0\partial_1\partial_3(\rho u_1)
+\partial_0\partial_2\partial_2(\rho u_1)
+\partial_0\partial_2\partial_3(\rho u_1)
+\partial_0\partial_3\partial_3(\rho u_1)
+\partial_1\partial_1\partial_1(\rho u_1)
+\partial_1\partial_1\partial_2(\rho u_1)
+\partial_1\partial_1\partial_3(\rho u_1)
+\partial_1\partial_2\partial_2(\rho u_1)
+\partial_1\partial_2\partial_3(\rho u_1)
+\partial_1\partial_3\partial_3(\rho u_1)
+\partial_2\partial_2\partial_2(\rho u_1)
+\partial_2\partial_2\partial_3(\rho u_1)
+\partial_2\partial_3\partial_3(\rho u_1)
+\partial_3\partial_3\partial_3(\rho u_1)
+\partial_0\partial_0\partial_0\partial_0(\rho u_1)
+\partial_0\partial_0\partial_0\partial_1(\rho u_1)
+\partial_0\partial_0\partial_0\partial_2(\rho u_1)
+\partial_0\partial_0\partial_0\partial_3(\rho u_1)
+\partial_0\partial_0\partial_1\partial_1(\rho u_1)
+\partial_0\partial_0\partial_1\partial_2(\rho u_1)
+\partial_0\partial_0\partial_1\partial_3(\rho u_1)
+\partial_0\partial_0\partial_2\partial_2(\rho u_1)
+\partial_0\partial_0\partial_2\partial_3(\rho u_1)
+\partial_0\partial_0\partial_3\partial_3(\rho u_1)
+\partial_0\partial_1\partial_1\partial_1(\rho u_1)
+\partial_0\partial_1\partial_1\partial_2(\rho u_1)
+\partial_0\partial_1\partial_1\partial_3(\rho u_1)
+\partial_0\partial_1\partial_2\partial_2(\rho u_1)
+\partial_0\partial_1\partial_2\partial_3(\rho u_1)
+\partial_0\partial_1\partial_3\partial_3(\rho u_1)
+\partial_0\partial_2\partial_2\partial_2(\rho u_1)
+\partial_0\partial_2\partial_2\partial_3(\rho u_1)
+\partial_0\partial_2\partial_3\partial_3(\rho u_1)
+\partial_0\partial_3\partial_3\partial_3(\rho u_1)
+\partial_1\partial_1\partial_1\partial_1(\rho u_1)
+\partial_1\partial_1\partial_1\partial_2(\rho u_1)
+\partial_1\partial_1\partial_1\partial_3(\rho u_1)
+\partial_1\partial_1\partial_2\partial_2(\rho u_1)
+\partial_1\partial_1\partial_2\partial_3(\rho u_1)
+\partial_1\partial_1\partial_3\partial_3(\rho u_1)
+\partial_1\partial_2\partial_2\partial_2(\rho u_1)
+\partial_1\partial_2\partial_2\partial_3(\rho u_1)
+\partial_1\partial_2\partial_3\partial_3(\rho u_1)
+\partial_1\partial_3\partial_3\partial_3(\rho u_1)
+\partial_2\partial_2\partial_2\partial_2(\rho u_1)
+\partial_2\partial_2\partial_2\partial_3(\rho u_1)
+\partial_2\partial_2\partial_3\partial_3(\rho u_1)
+\partial_2\partial_3\partial_3\partial_3(\rho u_1)
+\partial_3\partial_3\partial_3\partial_3(\rho u_1)
+\partial_0(\rho u_2)
+\partial_1(\rho u_2)
+\partial_2(\rho u_2)
+\partial_3(\rho u_2)
+\partial_0\partial_0(\rho u_2)
+\partial_0\partial_1(\rho u_2)
+\partial_0\partial_2(\rho u_2)
+\partial_0\partial_3(\rho u_2)
+\partial_1\partial_1(\rho u_2)
+\partial_1\partial_2(\rho u_2)
+\partial_1\partial_3(\rho u_2)
+\partial_2\partial_2(\rho u_2)
+\partial_2\partial_3(\rho u_2)
+\partial_3\partial_3(\rho u_2)
+\partial_0\partial_0\partial_0(\rho u_2)
+\partial_0\partial_0\partial_1(\rho u_2)
+\partial_0\partial_0\partial_2(\rho u_2)
+\partial_0\partial_0\partial_3(\rho u_2)
+\partial_0\partial_1\partial_1(\rho u_2)
+\partial_0\partial_1\partial_2(\rho u_2)
+\partial_0\partial_1\partial_3(\rho u_2)
+\partial_0\partial_2\partial_2(\rho u_2)
+\partial_0\partial_2\partial_3(\rho u_2)
+\partial_0\partial_3\partial_3(\rho u_2)
+\partial_1\partial_1\partial_1(\rho u_2)
+\partial_1\partial_1\partial_2(\rho u_2)
+\partial_1\partial_1\partial_3(\rho u_2)
+\partial_1\partial_2\partial_2(\rho u_2)
+\partial_1\partial_2\partial_3(\rho u_2)
+\partial_1\partial_3\partial_3(\rho u_2)
+\partial_2\partial_2\partial_2(\rho u_2)
+\partial_2\partial_2\partial_3(\rho u_2)
+\partial_2\partial_3\partial_3(\rho u_2)
+\partial_3\partial_3\partial_3(\rho u_2)
+\partial_0\partial_0\partial_0\partial_0(\rho u_2)
+\partial_0\partial_0\partial_0\partial_1(\rho u_2)
+\partial_0\partial_0\partial_0\partial_2(\rho u_2)
+\partial_0\partial_0\partial_0\partial_3(\rho u_2)
+\partial_0\partial_0\partial_1\partial_1(\rho u_2)
+\partial_0\partial_0\partial_1\partial_2(\rho u_2)
+\partial_0\partial_0\partial_1\partial_3(\rho u_2)
+\partial_0\partial_0\partial_2\partial_2(\rho u_2)
+\partial_0\partial_0\partial_2\partial_3(\rho u_2)
+\partial_0\partial_0\partial_3\partial_3(\rho u_2)
+\partial_0\partial_1\partial_1\partial_1(\rho u_2)
+\partial_0\partial_1\partial_1\partial_2(\rho u_2)
+\partial_0\partial_1\partial_1\partial_3(\rho u_2)
+\partial_0\partial_1\partial_2\partial_2(\rho u_2)
+\partial_0\partial_1\partial_2\partial_3(\rho u_2)
+\partial_0\partial_1\partial_3\partial_3(\rho u_2)
+\partial_0\partial_2\partial_2\partial_2(\rho u_2)
+\partial_0\partial_2\partial_2\partial_3(\rho u_2)
+\partial_0\partial_2\partial_3\partial_3(\rho u_2)
+\partial_0\partial_3\partial_3\partial_3(\rho u_2)
+\partial_1\partial_1\partial_1\partial_1(\rho u_2)
+\partial_1\partial_1\partial_1\partial_2(\rho u_2)
+\partial_1\partial_1\partial_1\partial_3(\rho u_2)
+\partial_1\partial_1\partial_2\partial_2(\rho u_2)
+\partial_1\partial_1\partial_2\partial_3(\rho u_2)
+\partial_1\partial_1\partial_3\partial_3(\rho u_2)
+\partial_1\partial_2\partial_2\partial_2(\rho u_2)
+\partial_1\partial_2\partial_2\partial_3(\rho u_2)
+\partial_1\partial_2\partial_3\partial_3(\rho u_2)
+\partial_1\partial_3\partial_3\partial_3(\rho u_2)
+\partial_2\partial_2\partial_2\partial_2(\rho u_2)
+\partial_2\partial_2\partial_2\partial_3(\rho u_2)
+\partial_2\partial_2\partial_3\partial_3(\rho u_2)
+\partial_2\partial_3\partial_3\partial_3(\rho u_2)
+\partial_3\partial_3\partial_3\partial_3(\rho u_2)
+\partial_0(\rho u_3)
+\partial_1(\rho u_3)
+\partial_2(\rho u_3)
+\partial_3(\rho u_3)
+\partial_0\partial_0(\rho u_3)
+\partial_0\partial_1(\rho u_3)
+\partial_0\partial_2(\rho u_3)
+\partial_0\partial_3(\rho u_3)
+\partial_1\partial_1(\rho u_3)
+\partial_1\partial_2(\rho u_3)
+\partial_1\partial_3(\rho u_3)
+\partial_2\partial_2(\rho u_3)
+\partial_2\partial_3(\rho u_3)
+\partial_3\partial_3(\rho u_3)
+\partial_0\partial_0\partial_0(\rho u_3)
+\partial_0\partial_0\partial_1(\rho u_3)
+\partial_0\partial_0\partial_2(\rho u_3)
+\partial_0\partial_0\partial_3(\rho u_3)
+\partial_0\partial_1\partial_1(\rho u_3)
+\partial_0\partial_1\partial_2(\rho u_3)
+\partial_0\partial_1\partial_3(\rho u_3)
+\partial_0\partial_2\partial_2(\rho u_3)
+\partial_0\partial_2\partial_3(\rho u_3)
+\partial_0\partial_3\partial_3(\rho u_3)
+\partial_1\partial_1\partial_1(\rho u_3)
+\partial_1\partial_1\partial_2(\rho u_3)
+\partial_1\partial_1\partial_3(\rho u_3)
+\partial_1\partial_2\partial_2(\rho u_3)
+\partial_1\partial_2\partial_3(\rho u_3)
+\partial_1\partial_3\partial_3(\rho u_3)
+\partial_2\partial_2\partial_2(\rho u_3)
+\partial_2\partial_2\partial_3(\rho u_3)
+\partial_2\partial_3\partial_3(\rho u_3)
+\partial_3\partial_3\partial_3(\rho u_3)
+\partial_0\partial_0\partial_0\partial_0(\rho u_3)
+\partial_0\partial_0\partial_0\partial_1(\rho u_3)
+\partial_0\partial_0\partial_0\partial_2(\rho u_3)
+\partial_0\partial_0\partial_0\partial_3(\rho u_3)
+\partial_0\partial_0\partial_1\partial_1(\rho u_3)
+\partial_0\partial_0\partial_1\partial_2(\rho u_3)
+\partial_0\partial_0\partial_1\partial_3(\rho u_3)
+\partial_0\partial_0\partial_2\partial_2(\rho u_3)
+\partial_0\partial_0\partial_2\partial_3(\rho u_3)
+\partial_0\partial_0\partial_3\partial_3(\rho u_3)
+\partial_0\partial_1\partial_1\partial_1(\rho u_3)
+\partial_0\partial_1\partial_1\partial_2(\rho u_3)
+\partial_0\partial_1\partial_1\partial_3(\rho u_3)
+\partial_0\partial_1\partial_2\partial_2(\rho u_3)
+\partial_0\partial_1\partial_2\partial_3(\rho u_3)
+\partial_0\partial_1\partial_3\partial_3(\rho u_3)
+\partial_0\partial_2\partial_2\partial_2(\rho u_3)
+\partial_0\partial_2\partial_2\partial_3(\rho u_3)
+\partial_0\partial_2\partial_3\partial_3(\rho u_3)
+\partial_0\partial_3\partial_3\partial_3(\rho u_3)
+\partial_1\partial_1\partial_1\partial_1(\rho u_3)
+\partial_1\partial_1\partial_1\partial_2(\rho u_3)
+\partial_1\partial_1\partial_1\partial_3(\rho u_3)
+\partial_1\partial_1\partial_2\partial_2(\rho u_3)
+\partial_1\partial_1\partial_2\partial_3(\rho u_3)
+\partial_1\partial_1\partial_3\partial_3(\rho u_3)
+\partial_1\partial_2\partial_2\partial_2(\rho u_3)
+\partial_1\partial_2\partial_2\partial_3(\rho u_3)
+\partial_1\partial_2\partial_3\partial_3(\rho u_3)
+\partial_1\partial_3\partial_3\partial_3(\rho u_3)
+\partial_2\partial_2\partial_2\partial_2(\rho u_3)
+\partial_2\partial_2\partial_2\partial_3(\rho u_3)
+\partial_2\partial_2\partial_3\partial_3(\rho u_3)
+\partial_2\partial_3\partial_3\partial_3(\rho u_3)
+\partial_3\partial_3\partial_3\partial_3(\rho u_3)

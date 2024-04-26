@@ -7,7 +7,7 @@ matrices G
 %% Combinatoric Search
 addpath('SPIDER_functions/');
 
-number_of_terms = 2;
+number_of_terms = 3;
 %residual_type = "|Gc|"; %Use this residual or the next
 residual_type = "|Gc|/max";
 [models, residuals, cs] = combinatoric_search( G, labels, number_of_terms, scales, residual_type );
@@ -26,10 +26,9 @@ res = norm(A*c - b)/ norm(b)
 c'
 
 
+
 %% Greedy_regression
 % Add/remove a term at a time to see how sparsity effects the residual
-
-G = G./vecnorm(G);
 
 index = 3; %use 1 2 or 3 depending on your residual choice.
 %1: |Gc|

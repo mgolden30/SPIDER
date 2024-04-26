@@ -4,14 +4,14 @@ Vector library for GRMHD
 
 
 %% Load data
-%clear;
+clear;
 
 
 %cartesian MHD data
 tic
 [rho, v, B, P, t, x1, x2, x3] = load_MHD_data_stitch();
 toc
-
+%%
 
 
 %Integrate library
@@ -38,7 +38,7 @@ scales   = zeros(1,nl);
 
 %we also need pol to be odd in time. multiply it by t
 pol0 = pol; %save for normalization
-pol  = multiply_pol( pol, legendre_pol( [1,0,0,0], dimension ) );
+%pol  = multiply_pol( pol, legendre_pol( [1,0,0,0], dimension ) );
 
 size_of_data = size(B, 1:dimension);
 corners = pick_subdomains( size_of_data, size_vec, buffer, nw );
@@ -54,14 +54,12 @@ grid = {t,x1,x2,x3};
 %%%%%%%%%%%%%%%%%%%%%%
 a = 1;
 
-%{
 labels{a} = "\partial_t B_i";
 G(:,a)    = [SPIDER_integrate( B(:,:,:,:,1), [1], grid, corners, size_vec, pol );
              SPIDER_integrate( B(:,:,:,:,2), [1], grid, corners, size_vec, pol );
              SPIDER_integrate( B(:,:,:,:,3), [1], grid, corners, size_vec, pol );];  
 scales(a) = 1;
 a         = a+1;
-%}
 
 for j = 2:4
   labels{a} = "\partial_" + j + "\partial_" + j + "B_i";
@@ -82,7 +80,7 @@ for j = 2:4
   a         = a+1;
 end
 
-%{
+%%{
 for j = 2:4
   for jj = j:4
     labels{a} = "\partial_" + j + "\partial_" + j + "\partial_" + jj + "\partial_" + jj + "(rho u_i)";
@@ -93,7 +91,7 @@ for j = 2:4
     a         = a+1;
   end
 end
-%}
+%%}
 
 
 labels{a} = "B_i";
@@ -219,3 +217,6 @@ norm_vec = repmat( norm_vec, [dof,1] );
 
 G = G./norm_vec;
 G = G./scales;
+
+%% 
+save('vector_G.mat', "G", "scales", "labels");

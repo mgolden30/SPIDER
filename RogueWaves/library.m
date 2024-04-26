@@ -1,0 +1,165 @@
+
+%% Load data
+clear;
+
+%cartesian MHD data
+tic
+[eta, x, y, t] = load_data();
+toc
+
+%% %Compute correlations
+
+%Integrate library
+addpath("../SPIDER_functions/");
+
+number_of_library_terms = 3;   %under-estimate this
+number_of_windows       = 1024; %number of domains we integrate over 
+degrees_of_freedom      = 1;   %vectors have one degree of freedom
+dimension               = 3;   %how many dimensions does our data have?
+envelope_power          = 4;   %weight is (1-x^2)^power
+size_vec                = [2,2,2]*32; %how many gridpoints should we use per integration?
+buffer                  = 0; %Don't use points this close to boundary
+
+
+%define shorthand notation
+nl = number_of_library_terms;
+nw = number_of_windows;
+dof= degrees_of_freedom;
+
+%Make important objects for integration
+pol      = envelope_pol( envelope_power, dimension );
+G        = zeros( dof*nw, nl );
+labels   = cell(nl, 1);
+scales   = zeros(1,nl);
+
+size_of_data = size(eta, 1:dimension);
+corners = pick_subdomains( size_of_data, size_vec, buffer, nw );
+
+%Nondimensionalize and compute mean and variation of data
+%TODO;
+
+%Create grid variable
+x = x(1,:);
+y = y(:,1);
+grid = {y,x,t};
+
+%%%%%%%%%%%%%%%%%%%%%%
+% LIBRARY INTEGRATION
+%%%%%%%%%%%%%%%%%%%%%%
+a = 1;
+
+labels{a} = "\eta_t";
+G (:,a)   = SPIDER_integrate( eta, [3], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+
+labels{a} = "\eta_x";
+G (:,a)   = SPIDER_integrate( eta, [2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_y";
+G (:,a)   = SPIDER_integrate( eta, [1], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta \eta_x";
+G (:,a)   = 0.5*SPIDER_integrate( eta.^2, [2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta \eta_y";
+G (:,a)   = 0.5*SPIDER_integrate( eta.^2, [1], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta^2 \eta_y";
+G (:,a)   = 1/3*SPIDER_integrate( eta.^3, [1], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta^2 \eta_x";
+G (:,a)   = 1/3*SPIDER_integrate( eta.^3, [2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+%second derivatives
+
+labels{a} = "\eta_xx";
+G (:,a)   = SPIDER_integrate( eta, [2,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_yy";
+G (:,a)   = SPIDER_integrate( eta, [1,1], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_xy";
+G (:,a)   = SPIDER_integrate( eta, [1,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+% Third derivatives
+
+labels{a} = "\eta_xxx";
+G (:,a)   = SPIDER_integrate( eta, [2,2,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_yyy";
+G (:,a)   = SPIDER_integrate( eta, [1,1,1], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_xxy";
+G (:,a)   = SPIDER_integrate( eta, [1,2,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_xyy";
+G (:,a)   = SPIDER_integrate( eta, [1,1,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+
+% polynomials of eta
+
+labels{a} = "\eta";
+G (:,a)   = SPIDER_integrate( eta, [], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+
+labels{a} = "\eta^2";
+G (:,a)   = SPIDER_integrate( eta.^2, [], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+
+labels{a} = "\eta^3";
+G (:,a)   = SPIDER_integrate( eta.^3, [], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+
+
+
+
+%normalize with non-odd polynomial.
+norm_vec = SPIDER_integrate( 0*eta + 1, [], grid, corners, size_vec, pol );      
+norm_vec = repmat( norm_vec, [dof,1] );
+
+
+G = G./norm_vec;
+G = G./scales;
+
+bad = isnan( G(:,1) );
+G(bad,:) = [];
+
+size(G)
+
+
+%% 
+save('G.mat', "G", "scales", "labels");

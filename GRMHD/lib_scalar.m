@@ -11,7 +11,8 @@ tic
 [rho, v, B, P, t, x1, x2, x3] = load_MHD_data_stitch();
 toc
 
-%%%Compute correlations
+
+%% %Compute correlations
 %tau = correlation_length( rho )
 %plot(-1./tau);
 %return
@@ -61,17 +62,14 @@ a = 1;
 %spacetime x0= t, x1 = x, x2 = y, etc.
 str  = @(j) "\partial_" + (j-1);
 
-%{
 for i = 1:3
   for j = 1:4 %since 2:4 are the spatial coordinates
     labels{a} = "\partial_" + j + " B_" + i;
-    G(:,a)    = SPIDER_integrate_meshes( B(:,:,:,:,i), [j], grid, corners, size_vec, pol );
+    G(:,a)    = SPIDER_integrate( B(:,:,:,:,i), [j], grid, corners, size_vec, pol );
     scales(a) = 1;
     a         = a+1; 
   end
 end
-%}
-
 
 fields = cell(4,1); %4-momentum
 fields{1} = rho;
@@ -137,3 +135,6 @@ norm_vec = repmat( norm_vec, [dof,1] );
 
 G = G./norm_vec;
 G = G./scales;
+
+%% 
+save('scalar_G.mat', "G", "scales", "labels");
