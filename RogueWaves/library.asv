@@ -7,18 +7,22 @@ tic
 [eta, x, y, t] = load_data();
 toc
 
+
+
+
+
 %% %Compute correlations
 
 %Integrate library
 addpath("../SPIDER_functions/");
 
 number_of_library_terms = 3;   %under-estimate this
-number_of_windows       = 512; %number of domains we integrate over 
+number_of_windows       = 1024*2; %number of domains we integrate over 
 degrees_of_freedom      = 1;   %vectors have one degree of freedom
 dimension               = 3;   %how many dimensions does our data have?
 envelope_power          = 4;   %weight is (1-x^2)^power
-size_vec                = [1,1,1]*32; %how many gridpoints should we use per integration?
-buffer                  = 0; %Don't use points this close to boundary
+size_vec                = [2,2,2]*32; %how many gridpoints should we use per integration?
+buffer                  = 2; %Don't use points this close to boundary
 
 
 %define shorthand notation
@@ -43,6 +47,13 @@ x = x(1,:);
 y = y(:,1);
 grid = {y,x,t};
 
+
+%finite difference for second derivative
+dy = y(2) - y(1);
+dx = x(2) - x(1);
+eta_yy = ( circshift(eta,-1,1) - 2*eta + circshift(eta,1,1) )/dy/dy;
+eta_xx = ( circshift(eta,-1,2) - 2*eta + circshift(eta,1,2) )/dx/dx;
+
 %%%%%%%%%%%%%%%%%%%%%%
 % LIBRARY INTEGRATION
 %%%%%%%%%%%%%%%%%%%%%%
@@ -52,6 +63,8 @@ labels{a} = "\eta_t";
 G (:,a)   = SPIDER_integrate( eta, [3], grid, corners, size_vec, pol );
 scales(a) = 1;
 a         = a+1;
+
+
 
 
 labels{a} = "\eta_x";
@@ -123,7 +136,55 @@ G (:,a)   = SPIDER_integrate( eta, [1,1,2], grid, corners, size_vec, pol );
 scales(a) = 1;
 a         = a+1;
 
-% 
+% Fourth derivatives
+
+labels{a} = "\eta_xxxx";
+G (:,a)   = SPIDER_integrate( eta, [2,2,2,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_yyyy";
+G (:,a)   = SPIDER_integrate( eta, [1,1,1,1], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_xxxy";
+G (:,a)   = SPIDER_integrate( eta, [1,2,2,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\eta_xxyy";
+G (:,a)   = SPIDER_integrate( eta, [1,1,2,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+
+labels{a} = "\eta_xyyy";
+G (:,a)   = SPIDER_integrate( eta, [1,1,1,2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+%nonlinear fluxes
+
+labels{a} = "\partial_y( \eta \eta_yy )";
+G (:,a)   = SPIDER_integrate( eta.*eta_yy, [1], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+labels{a} = "\partial_x( \eta \eta_xx )";
+G (:,a)   = SPIDER_integrate( eta.*eta_xx, [2], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
+
+
+% polynomials of eta
+%{
+labels{a} = "\eta";
+G (:,a)   = SPIDER_integrate( eta, [], grid, corners, size_vec, pol );
+scales(a) = 1;
+a         = a+1;
+
 
 labels{a} = "\eta^2";
 G (:,a)   = SPIDER_integrate( eta.^2, [], grid, corners, size_vec, pol );
@@ -135,7 +196,7 @@ labels{a} = "\eta^3";
 G (:,a)   = SPIDER_integrate( eta.^3, [], grid, corners, size_vec, pol );
 scales(a) = 1;
 a         = a+1;
-
+%}
 
 
 

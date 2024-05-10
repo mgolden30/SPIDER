@@ -82,7 +82,7 @@ pbaspect([2 1 1])
 %xline( starting_K );
 
 %Print some models 
-for interest = 2:7
+for interest = 2:10
   print_model( interest, cs_ave, res_ave, index, labels, scales )
 end
 

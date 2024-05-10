@@ -53,8 +53,8 @@ eta=ncread('xygrid_50cm_20231124_1300_plane_sub.nc','eta');
 t = 0:size(eta,3)-1/fsample;
 
 %Do some filtering in space and time
-%sigma = 2;
-%eta = imgaussfilt3( eta, sigma);
+sigma = 1;
+eta  =imgaussfilt3( eta, sigma);
 
 
 %{
