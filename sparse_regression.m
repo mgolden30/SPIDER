@@ -29,7 +29,8 @@ c'
 %% Greedy_regression
 % Add/remove a term at a time to see how sparsity effects the residual
 
-G = G./vecnorm(G);
+%ONLY DO THIS IF YOU WANT TO THROW OUT DIMENSIONAL INFORMATION
+%G = G./vecnorm(G);
 
 index = 3; %use 1 2 or 3 depending on your residual choice.
 %1: |Gc|
