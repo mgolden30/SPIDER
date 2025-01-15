@@ -110,7 +110,7 @@ function [cs, residuals, fbounds] = greedy_regression_pure_matlab( G )
     j = find(I);
     I(j(i_min)) = 0;
     G = A0(:, I);
-    size(G)
+    %size(G)
     n = n-1;
   end
 
