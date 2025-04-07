@@ -80,7 +80,12 @@ function vals = SPIDER_integrate_safe( data, derivs, grid, corners, size_vec, be
     derivs(1) = []; %Delete this derivative as we have taken it analytically
   end
   %}
-  
+ 
+  %Construct literal weight "functions"
+  Fs = cell(n,1);
+  for i = 1:n
+      Fs{i} = weight_function( betas(i), sum(derivs==i) );
+  end
  
   %Now we are ready to start the integration loop
   for i = 1:num_windows
@@ -111,7 +116,9 @@ function vals = SPIDER_integrate_safe( data, derivs, grid, corners, size_vec, be
       conversion_factor = conversion_factor * m^sum(derivs == j);
       %^this accounts for changing derivatives from d/dx = m d/dy
       
-      phi = weight_function( y, betas(j), sum(derivs==j) );
+      %phi = weight_function( y, betas(j), sum(derivs==j) );
+      phi = Fs{j}(y);
+      phi = reshape(phi, [], 1); %enforce that phi is a column vector
 
       %poly_weight_1d = polyval( fliplr( pol(:,j)' ), y ); %evaluate the polynomial weight for this dimension
       %poly_weight_1d = reshape( poly_weight_1d, [numel(y), 1]); %make sure its a column vector
@@ -148,7 +155,7 @@ function data = kill_first_dimension( data )
   end
 end
 
-function phi = weight_function( y, beta, derivs )
+function F = weight_function( beta, derivs )
   syms x;
 
   phi = (1-x^2)^beta;
@@ -160,9 +167,4 @@ function phi = weight_function( y, beta, derivs )
   phi = phi * (-1)^derivs;
  
   F = matlabFunction(phi, 'vars', {[x]});
-
-  phi = F(y);
-
-  phi = reshape(phi, [], 1);
-  %phi = subs( phi, x, y);
 end
